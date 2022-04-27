@@ -84,7 +84,7 @@ public class Main extends Application {
 		int in,out;
 		int moves;
 
-		public Cell(int id,boolean moveable,boolean free,FileInputStream inputway,String type,int in,int out) throws FileNotFoundException {
+		public Cell(int id,boolean moveable,boolean free,String inputway,String type,int in,int out) throws FileNotFoundException {
 				this.in=in;this.out=out;
 				this.id=id;
 				this.moveable=moveable;
@@ -272,15 +272,8 @@ public class Main extends Application {
 					if(a.getType().equals("Starter") || a.getType().equals("Starter90")) {
 							animationpath.add(a.id);
 						if(woncheck(a.in,a.out,a.id,99)) {
-							FileInputStream input;
 							Image circ=null;
-							try {
-								input = new FileInputStream("C:\\Users\\ozand\\Desktop\\assets\\circle.png");
-								circ=new Image(input);
-							} catch (FileNotFoundException e2) {
-								// TODO Auto-generated catch block
-								e2.printStackTrace();
-							}
+							circ=new Image("circle.png");
 							
 							Path path=new Path();
 							Circle circle=new Circle();
@@ -389,7 +382,11 @@ public class Main extends Application {
 
 
 	public void create_episode(int level) throws FileNotFoundException {
+		
+  	  list.removeAll(list);
 
+		
+	  root.getChildren().clear();
 		
 	    try {
 	    	
@@ -426,88 +423,70 @@ public class Main extends Application {
 	          if(!(data.equals(""))) {
 	        	  String[] item=data.split(",");
 	        	  if(item[1].equals("Empty")) {
-	        		  if(item[2].equals("none")) {
-		        			FileInputStream input = new FileInputStream("C:\\Users\\ozand\\Desktop\\assets\\empty.png"); 
-		        			list.add(new Cell(id,true,false,input,"Empty",0,0)) ;
+	        		  if(item[2].equals("none")) { 
+		        			list.add(new Cell(id,true,false,"empty.png","Empty",0,0)) ;
 	        		  }
 	        		  else if(item[2].equals("Free")){
-		        			FileInputStream input = new FileInputStream("C:\\Users\\ozand\\Desktop\\assets\\empty_free.png"); 
-		        			list.add(new Cell(id,true,true,input,"EmptyFree",0,0)) ;
+		        			list.add(new Cell(id,true,true,"empty_free.png","EmptyFree",0,0)) ;
 	        		  }
 	        	  }
 	        	  else if(item[1].equals("Starter")) {
-	        		  if(item[2].equals("Vertical")) {
-		        			FileInputStream input = new FileInputStream("C:\\Users\\ozand\\Desktop\\assets\\starter.png"); 
-		        			list.add(new Cell(id,false,false,input,"Starter",1,3)) ;
+	        		  if(item[2].equals("Vertical")) { 
+		        			list.add(new Cell(id,false,false,"starter.png","Starter",1,3)) ;
 	        		  }
-	        		  else {
-		        			FileInputStream input = new FileInputStream("C:\\Users\\ozand\\Desktop\\assets\\starter90.png"); 
-		        			list.add(new Cell(id,false,false,input,"Starter90",2,4)) ;
+	        		  else { 
+		        			list.add(new Cell(id,false,false,"starter90.png","Starter90",2,4)) ;
 	        		  }
 	        	
 	        	  }
 	        	  else if(item[1].equals("Pipe")) {
-	        		  if(item[2].equals("Vertical")) {
-		        			FileInputStream input = new FileInputStream("C:\\Users\\ozand\\Desktop\\assets\\pipe_free.png"); 
-		        			list.add(new Cell(id,true,false,input,"PipeFree",1,3)) ;
+	        		  if(item[2].equals("Vertical")) { 
+		        			list.add(new Cell(id,true,false,"pipe_free.png","PipeFree",1,3)) ;
 	        		  }
-	        		  else if(item[2].equals("Horizontal")){
-		        			FileInputStream input = new FileInputStream("C:\\Users\\ozand\\Desktop\\assets\\pipe_free90.png"); 
-		        			list.add(new Cell(id,true,false,input,"PipeFree90",2,4)) ;
+	        		  else if(item[2].equals("Horizontal")){; 
+		        			list.add(new Cell(id,true,false,"pipe_free90.png","PipeFree90",2,4)) ;
 	        		  }
 	        		  else if(item[2].equals("00")){
-		        			FileInputStream input = new FileInputStream("C:\\Users\\ozand\\Desktop\\assets\\curved0.png"); 
-		        			list.add(new Cell(id,true,false,input,"Curved0",1,4)) ;
+		        			list.add(new Cell(id,true,false,"curved0.png","Curved0",1,4)) ;
 	        		  }
 	        		  else if(item[2].equals("01")){
-		        			FileInputStream input = new FileInputStream("C:\\Users\\ozand\\Desktop\\assets\\curved90.png"); 
-		        			list.add(new Cell(id,true,false,input,"Curved90",1,2)) ;
+		        			list.add(new Cell(id,true,false,"curved90.png","Curved90",1,2)) ;
 	        		  }
 	        		  else if(item[2].equals("10")){
-		        			FileInputStream input = new FileInputStream("C:\\Users\\ozand\\Desktop\\assets\\curved270.png"); 
-		        			list.add(new Cell(id,true,false,input,"Curved270",4,3)) ;
+		        			list.add(new Cell(id,true,false,"curved270.png","Curved270",4,3)) ;
 	        		  }
 	        		  else if(item[2].equals("11")){
-		        			FileInputStream input = new FileInputStream("C:\\Users\\ozand\\Desktop\\assets\\curved180.png"); 
-		        			list.add(new Cell(id,true,false,input,"Curved180",2,3)) ;
+		        			list.add(new Cell(id,true,false,"curved180.png","Curved180",2,3)) ;
 	        		  }
 	        	
 	        	  }
 	        	  else if(item[1].equals("PipeStatic")) {
 	        		  if(item[2].equals("Horizontal")) {
-		        			FileInputStream input = new FileInputStream("C:\\Users\\ozand\\Desktop\\assets\\pipe.png"); 
-		        			list.add(new Cell(id,false,false,input,"PipeStatic",4,2)) ;
+		        			list.add(new Cell(id,false,false,"pipe.png","PipeStatic",4,2)) ;
 	        		  }
 	        		  else if(item[2].equals("Vertical")){
-		        			FileInputStream input = new FileInputStream("C:\\Users\\ozand\\Desktop\\assets\\pipe90.png"); 
-		        			list.add(new Cell(id,false,false,input,"PipeStatic90",1,3)) ;
+		        			list.add(new Cell(id,false,false,"pipe90.png","PipeStatic90",1,3)) ;
 	        		  }
 	        		  else if(item[2].equals("00")){
-		        			FileInputStream input = new FileInputStream("C:\\Users\\ozand\\Desktop\\assets\\pipecurved0.png"); 
-		        			list.add(new Cell(id,false,false,input,"StaticCurved0",1,4)) ;
+		        			list.add(new Cell(id,false,false,"pipecurved0.png","StaticCurved0",1,4)) ;
 	        		  }
 	        		  else if(item[2].equals("01")){
-		        			FileInputStream input = new FileInputStream("C:\\Users\\ozand\\Desktop\\assets\\pipecurved90.png"); 
-		        			list.add(new Cell(id,false,false,input,"StaticCurved90",1,2)) ;
+		        			list.add(new Cell(id,false,false,"pipecurved90.png","StaticCurved90",1,2)) ;
 	        		  }
 	        		  else if(item[2].equals("10")){
-		        			FileInputStream input = new FileInputStream("C:\\Users\\ozand\\Desktop\\assets\\pipecurved270.png"); 
-		        			list.add(new Cell(id,false,false,input,"StaticCurved270",4,3)) ;
+		        			list.add(new Cell(id,false,false,"pipecurved270.png","StaticCurved270",4,3)) ;
 	        		  }
 	        		  else if(item[2].equals("11")){
-		        			FileInputStream input = new FileInputStream("C:\\Users\\ozand\\Desktop\\assets\\pipecurved180.png"); 
-		        			list.add(new Cell(id,false,false,input,"StaticCurved180",2,3)) ;
+		        			list.add(new Cell(id,false,false,"pipecurved180.png","StaticCurved180",2,3)) ;
 	        		  }
 	        	
 	        	  }
 	        	  else if(item[1].equals("End")) {
 	        		  if(item[2].equals("Vertical")) {
-		        			FileInputStream input = new FileInputStream("C:\\Users\\ozand\\Desktop\\assets\\end.png"); 
-		        			list.add(new Cell(id,false,false,input,"End",1,3)) ;
+		        			list.add(new Cell(id,false,false,"end.png","End",1,3)) ;
 	        		  }
 	        		  else {
-		        			FileInputStream input = new FileInputStream("C:\\Users\\ozand\\Desktop\\assets\\end90.png"); 
-		        			list.add(new Cell(id,false,false,input,"End90",2,4)) ;
+		        			list.add(new Cell(id,false,false,"end90.png","End90",2,4)) ;
 	        		  }
 	        	
 	        	  }
@@ -545,7 +524,6 @@ public class Main extends Application {
 		
 		Text text=new Text("NUMBER OF MOVES: ");
 		text.setFont(Font.font("Courier", FontWeight.BOLD,FontPosture.REGULAR, 25));
-		FileInputStream input = new FileInputStream("C:\\Users\\ozand\\Desktop\\assets\\board-background.png");
 		
 		root.getChildren().add(text);
 		text.setY(35);
@@ -630,8 +608,8 @@ public class Main extends Application {
 	public class MainMenuButton extends Button {
 
 		
-		Button buton=new Button("MAINMENU");
-		
+		Button buton=new Button("");
+
 		
 		public Button getButton() {
 			return buton;
@@ -644,7 +622,14 @@ public class Main extends Application {
 
 
 		MainMenuButton(){
-			
+			Image img = new Image("home-button.png");
+			ImageView imgv=new ImageView(img);
+			buton.setPrefSize(40, 40);
+			buton.setGraphic(imgv);
+			buton.setStyle("-fx-border-color: transparent; -fx-background-color: transparent;");
+
+			buton.setLayoutX(550);
+			buton.setLayoutY(0);
 			buton.setOnAction(e->{
 				
 		    	  list.removeAll(list);
@@ -655,16 +640,11 @@ public class Main extends Application {
 				Pane secondpane = new Pane();
 				// Place nodes in the pane
 				
-				
-				try {
-					FileInputStream input_background = new FileInputStream("C:\\Users\\ozand\\Desktop\\assets\\board-background.png"); 
-					ImageView backGround = new ImageView(new Image (input_background));
+					ImageView backGround = new ImageView(new Image ("board-background.png"));
 
 					Button [] levels = {new Button(), new Button(), new Button(), new Button(),new Button(),new Button()};
-					FileInputStream input_locked = new FileInputStream("C:\\Users\\ozand\\Desktop\\assets\\level-pack-locked.png"); 
-					Image image = new Image (input_locked);
-					FileInputStream input_unlocked = new FileInputStream("C:\\Users\\ozand\\Desktop\\assets\\level-pack-unlocked.png");
-					Image image_1 = new Image (input_unlocked);
+					Image image = new Image ("level-pack-locked.png");
+					Image image_1 = new Image ("level-pack-unlocked.png");
 
 					backGround.setFitHeight(650);
 					backGround.setFitWidth(600);
@@ -707,6 +687,18 @@ public class Main extends Application {
 
 
 					scene.setRoot(root);
+					
+					levels[0].setOnAction(R->{
+						try {
+							create_episode(0);
+						} catch (FileNotFoundException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					});
+					
+					
+					
 					/*
 					Scene scene2 = new Scene(secondpane,600,600);
 					stage.setTitle("Menu"); 
@@ -715,13 +707,6 @@ public class Main extends Application {
 						stage.setScene(scene);
 					}); */
 					
-					
-				
-				}
-				catch (FileNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}	
 
 	});
 
