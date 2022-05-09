@@ -327,7 +327,7 @@ public class Main extends Application {
 							root.getChildren().clear();
 
 							try {
-								createEpisode(level);
+								createEpisode(atLevel);
 								not.hide();
 							} catch (FileNotFoundException e1) {
 								e1.printStackTrace();
