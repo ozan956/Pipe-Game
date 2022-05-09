@@ -1,4 +1,7 @@
-
+//OZAN DURGUT IBRAHIM TINAS 
+//150719002   1507190046
+//PIPE GAME
+//Pipe Game is a game that you replace the blocks to create true path for moving all to start till the end.
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -31,23 +34,24 @@ import javafx.scene.text.Text;
 public class Main extends Application {
 	// level holds that user's passed level number. moveCount holds number of moves
 	// in each level.
-	int level = 0;
-	int moveCount = 0;
-
+	private int level = 0;private int moveCount = 0;
+	private boolean isPassed[]=new boolean[7];
+	private int atLevel=1; 
 	// animationPath holds the coordinates of Ball animation that happens when level
 	// is passed.
-	ArrayList<Integer> animationPath = new ArrayList<Integer>();
+	private ArrayList<Integer> animationPath = new ArrayList<Integer>();
 
 	// frameList holds the all Blocks in the scene.
-	ArrayList<Block> frameList = new ArrayList<Block>();
+	private ArrayList<Block> frameList = new ArrayList<Block>();
 
 	// All scene's default objects.
-	Circle staticBall = new Circle();
-	Text taskBarText = new Text("NUMBER OF MOVES: " + moveCount);
-
-	Scene scene = null;
-	Pane root = null;
-	Stage stage = new Stage();
+	private Circle staticBall = new Circle();
+	private Text taskBarText = new Text("NUMBER OF MOVES: " + moveCount);
+	
+	// Defaults.
+	private Scene scene = null;
+	private Pane root = null;
+	private Stage stage = new Stage();
 
 	@Override
 	public void start(Stage primaryStage) throws FileNotFoundException {
@@ -86,26 +90,37 @@ public class Main extends Application {
 			case 0: {
 				file = new File("level1.txt");
 				read = new Scanner(file);
+				atLevel=1;
 				break;
 			}
 			case 1: {
 				file = new File("level2.txt");
 				read = new Scanner(file);
+				atLevel=2;
 				break;
 			}
 			case 2: {
 				file = new File("level3.txt");
 				read = new Scanner(file);
+				atLevel=3;
 				break;
 			}
 			case 3: {
 				file = new File("level4.txt");
 				read = new Scanner(file);
+				atLevel=4;
 				break;
 			}
 			case 4: {
 				file = new File("level5.txt");
 				read = new Scanner(file);
+				atLevel=5;
+				break;
+			}
+			case 5: {
+				file = new File("level6.txt");
+				read = new Scanner(file);
+				atLevel=6;
 				break;
 			}
 			default: {
@@ -139,7 +154,7 @@ public class Main extends Application {
 					if (blockType[1].equals("Empty")) {
 						if (blockType[2].equals("none")) {
 							frameList.add(new Block(position, true, false, "empty.png", "Empty", 0, 0));
-						} else if (blockType[2].equals("Free")) {
+						} else if (blockType[2].equalsIgnoreCase("Free")) {
 							frameList.add(new Block(position, true, true, "empty_free.png", "EmptyFree", 0, 0));
 						}
 					} else if (blockType[1].equals("Starter")) {
@@ -197,7 +212,6 @@ public class Main extends Application {
 			}
 			read.close();
 		} catch (FileNotFoundException e) {
-			System.out.println("File Of the Level Cannot be Found/Reached.");
 			e.printStackTrace();
 		}
 
@@ -244,7 +258,7 @@ public class Main extends Application {
 		// Searches for Start Block.
 		for (Block block : frameList) {
 			if (block.getType().equals("Starter") || block.getType().equals("Starter90")) {
-
+				animationPath.removeAll(animationPath);
 				// Add Starter Block's positions to path.
 				animationPath.add(block.position);
 
@@ -252,6 +266,9 @@ public class Main extends Application {
 				// block encounters
 				// with End block or not.
 				if (isPathExist(block.inPoint, block.outPoint, block.position, 99)) {
+					
+					
+					
 
 					// First deletes the static ball and then creates animatedBall.
 					Circle animatedBall = new Circle();
@@ -264,7 +281,7 @@ public class Main extends Application {
 
 					// Creates the path and set its start position Starter block.
 					Path path = new Path();
-					path.getElements().add(new MoveTo(frameList.get(0).getX() + 75, frameList.get(0).getY() + 75));
+					path.getElements().add(new MoveTo(block.getX() + 75, block.getY() + 75));
 					// Deletes first coordinates because already added.
 					animationPath.remove(0);
 
@@ -293,8 +310,15 @@ public class Main extends Application {
 					// that user passed this level, and then sets new level.
 
 					pathTransition.setOnFinished(d -> {
+						
+						
+						if((!isPassed[atLevel-1])) {
+							isPassed[level]=true;
+							level++;
+						}
 
-						level++;
+						
+						
 						Notification not = new Notification();
 
 						not.buton.setOnMouseClicked(arg -> {
@@ -339,7 +363,6 @@ public class Main extends Application {
 				if (frameList.get(neighbor).getType().equals("End")
 						|| frameList.get(neighbor).getType().equals("End90")) {
 					animationPath.add(neighbor);
-					System.out.println("You Finished!");
 					return true;
 				}
 				if (frameList.get(neighbor).outPoint == inPoint || frameList.get(neighbor).inPoint == inPoint
@@ -379,11 +402,11 @@ public class Main extends Application {
 	}
 
 	public class Block extends ImageView {
-		String type = null;
+		private String type = null;
 		private int position;
-		boolean moveable, emptyFree;
-		double xStart, yStart, xFinal, yFinal, xInitial, yInital;
-		int inPoint, outPoint;
+		private boolean moveable, emptyFree;
+		private double xStart, yStart, xFinal, yFinal, xInitial, yInital;
+		private int inPoint, outPoint;
 
 		public Block(int position, boolean moveable, boolean emptyFree, String fileName, String type, int inPoint,
 				int outPoint) throws FileNotFoundException {
@@ -457,7 +480,6 @@ public class Main extends Application {
 								&& (this.isEmptyFree() || frameList.get(this.position - 4).isEmptyFree())))
 					swapBlocks(this, this.position - 4);
 				else {
-					System.out.println("cant move");
 				}
 
 				this.setX(xInitial);
@@ -601,11 +623,11 @@ public class Main extends Application {
 	}
 
 	public class Notification extends Stage {
-		Button buton = new Button("Press to move to next level");
-		boolean pressed = false;
+		private Button buton = new Button("Press to move to next level");
+		private boolean pressed = false;
 
 		// It creates a stage with a button when a level is passed.
-		Notification() {
+		 Notification() {
 			// set button settings.
 			buton.setCursor(Cursor.HAND);
 			buton.setPrefWidth(200);
@@ -633,9 +655,9 @@ public class Main extends Application {
 	}
 
 	public class MainMenuButton extends Button {
-		int i = 1;int j = 20;
-		Button buton = new Button("");
-		ArrayList<menubuttons> menubuttons = new ArrayList<menubuttons>();
+		public int i = 1;public int j = 20;
+		private Button buton = new Button("");
+		private ArrayList<menubuttons> menubuttons = new ArrayList<menubuttons>();
 		
 		MainMenuButton() {
 			//Button settings and graphics.
@@ -668,16 +690,17 @@ public class Main extends Application {
 			
 			
 			//Adding buttons
-			for (int i = 0; i < 5; i++) {
+			for (int i = 0; i < 6; i++) {
 				menubuttons.add(new menubuttons(i));
 			}
 
 			//sets images and positions of buttons.
+			
 			for (menubuttons buton : menubuttons) {
 
 				if (i <= level + 1) {
 					buton.setLayoutX(200);
-					buton.setLayoutY(100 + j);
+					buton.setLayoutY(70 + j);
 					buton.setPrefSize(40, 40);
 					buton.setGraphic(new ImageView(new Image("level" + i + "-pack-unlocked.png")));
 					buton.setCursor(Cursor.HAND);
@@ -693,7 +716,7 @@ public class Main extends Application {
 
 					buton.setPrefSize(40, 40);
 					buton.setLayoutX(180);
-					buton.setLayoutY(100 + j);
+					buton.setLayoutY(70 + j);
 					buton.setGraphic(new ImageView(new Image("level" + i + "-pack-locked.png")));
 					buton.setCursor(Cursor.DEFAULT);
 
@@ -721,10 +744,8 @@ public class Main extends Application {
 		
 		public class menubuttons extends Button {
 			private int sira;
-			Button buton;
 
 			menubuttons(int sira) {
-				buton = new Button();
 				this.sira = sira;
 			}
 
