@@ -33,7 +33,7 @@ import javafx.scene.text.Text;
 
 public class Main extends Application {
 	// level holds that user's passed level number. moveCount holds number of moves
-	// in each level.
+	// in each level. atLevel and isPassed used for unlock Levels at main menu.
 	private int level = 0;private int moveCount = 0;
 	private boolean isPassed[]=new boolean[7];
 	private int atLevel=1; 
