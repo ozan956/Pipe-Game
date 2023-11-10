@@ -1,6 +1,8 @@
 # PIPE GAME
+###### This project implemented at 12/05/2021.
+###### Ozan Durgut & Ibrahim Tinas
 ## Important Note
-This project implemented at 12/05/2021
+
 We didn't use file paths to make the code work on everyone's computer. 
 To prevent this, you can run the files via Eclipse or use the PipeGame.jar file. Also, Pipe
 Game.jar file must be stay with other source files to be able to see the assets.
