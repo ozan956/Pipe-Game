@@ -1,16 +1,62 @@
-# PIPE GAME
-###### This project implemented at 12/05/2021.
-###### Ozan Durgut & Ibrahim Tinas
-## Important Note
+# Pipe Game
 
-We didn't use file paths to make the code work on everyone's computer. 
-To prevent this, you can run the files via Eclipse or use the PipeGame.jar file. Also, Pipe
-Game.jar file must be stay with other source files to be able to see the assets.
-## Problem Definition
-The Aim of this game is delivering a ball from start location to the end. To do that, player can 
-replace the pipes with dragging mouse. When the correct path constructed, player can play next 
-level. 
-As shown in Table 1.1, sample game boards constructed 4x4 tiles, each tiles types have some 
-specific properties as listed in Table 1.2. The ball always start blue tile and path will end at the 
-red tile.
+A small JavaFX puzzle game built as a CSE1241 course project in 2021.
 
+The goal is to move the pipe tiles until the ball can travel from the blue start
+tile to the red end tile. Each level is a 4x4 board loaded from a plain text
+file.
+
+## Project Status
+
+This is an old university assignment, lightly cleaned up so it is easier to
+read, run, and keep in version control.
+
+## Authors
+
+- Ozan Durgut
+- Ibrahim Tinas
+
+## Repository Layout
+
+- `src/Main.java` - JavaFX application and game logic.
+- `src/*.png` - game assets.
+- `*.txt` - level definitions. Valid level files in the project root are loaded
+  automatically.
+
+## Running
+
+The project needs JavaFX on the compile and runtime module path. On Ubuntu:
+
+```bash
+sudo apt install openjdk-21-jdk openjfx
+make run
+```
+
+If JavaFX is installed somewhere else, pass its `lib` directory:
+
+```bash
+make run JAVAFX_LIB=/path/to/javafx-sdk/lib
+```
+
+Manual commands:
+
+```bash
+javac --module-path /usr/share/openjfx/lib --add-modules javafx.controls -d out src/Main.java
+java --module-path /usr/share/openjfx/lib --add-modules javafx.controls -cp out:src Main
+```
+
+The old Eclipse workflow also works:
+
+1. Import the project into Eclipse.
+2. Make sure JavaFX is available on the build path.
+3. Run `Main.java`.
+
+## Notes
+
+- Level files are discovered from the repository root at startup. Any valid
+  `.txt` file with 16 block rows can be used as a level, regardless of its file
+  name.
+- Files with numbers in their names are ordered by that number first, then by
+  file name. Other valid `.txt` files are ordered after the numbered ones.
+- The code intentionally keeps the original single-file assignment structure,
+  with small cleanup around level loading, menu state, and completed-level flow.

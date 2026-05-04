@@ -1,0 +1,16 @@
+# Local IDE metadata
+.idea/
+.vscode/
+.settings/
+
+# Java build output
+*.class
+*.jar
+bin/
+build/
+out/
+target/
+
+# OS noise
+.DS_Store
+Thumbs.db
